@@ -69,8 +69,7 @@ fun HomeScreen() {
                         top.linkTo(nameRow.bottom)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
-                    }
-            )
+                    })
 
             TransactionList(
                 modifier = Modifier
@@ -101,7 +100,7 @@ fun CardItem(modifier: Modifier) {
         Box (modifier = Modifier
             .fillMaxSize()
             .weight(1f)) {
-            Column(modifier = Modifier.align(Alignment.CenterStart)) {
+            Column {
                 Text(text = "Total Balance", fontSize = 16.sp, color = Color.White)
                 Text(
                     text = "$5000",
@@ -173,7 +172,7 @@ fun TransactionList(modifier: Modifier) {
 @Composable
 fun TransactionItem(title: String, amount: String, icon: Int, date: String, color: Color){
     Box(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp)){
-        Row{
+        Row(){
             Image(
                painter= painterResource(id = icon),
                 contentDescription = null,
@@ -200,7 +199,7 @@ fun CardRowItem(modifier: Modifier, title: String, amount: String, image: Int ){
             Spacer(modifier = Modifier.size(8.dp))
             Text(text = title, fontSize = 16.sp,  color = Color.White)
         }
-        Text(text = amount, fontSize = 16.sp, color = Color.White)
+        Text(text = amount, fontSize = 20.sp, color = Color.White)
     }
 }
 @Composable
