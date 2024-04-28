@@ -1,5 +1,11 @@
 package com.cces.budgetapp
 
+import android.app.LocaleManager
+import android.content.Context
+import android.os.Build
+import android.os.LocaleList
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,7 +22,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -31,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.os.LocaleListCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.cces.budgetapp.data.model.ExpenseEntity
@@ -43,6 +52,7 @@ import com.cces.budgetapp.widget.ExpenseTextView
 @Composable
 fun HomeScreen(navController: NavController) {
     val viewModel = HomeViewModelFactory(LocalContext.current).create(HomeViewModel::class.java)
+    val context = LocalContext.current
     Surface(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (nameRow, list, card, topBar, add) = createRefs()
@@ -63,16 +73,38 @@ fun HomeScreen(navController: NavController) {
                 Column(modifier = Modifier.align(Alignment.CenterStart)) {
                     ExpenseTextView(text = "Good Afernoon", fontSize = 16.sp, color = Color.White)
                     ExpenseTextView(
-                        text = "CodeWithFK",
+                        text = "User",
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 }
+                Row(modifier = Modifier.align(Alignment.TopEnd)){
+                    Button(onClick = {
+                        changeLocales(context, "en")
+                    }) {
+                        Text(
+                            text = "English",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                    Button(onClick = {
+                        changeLocales(context, "ur")
+                    }) {
+                        Text(
+                            text = "Urdu",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                }
                 Image(
                     painter = painterResource(id = R.drawable.ic_notification),
                     contentDescription = null,
-                    modifier = Modifier.align(Alignment.CenterEnd)
+                    modifier = Modifier.align(Alignment.BottomEnd)
                 )
             }
 
@@ -262,6 +294,16 @@ fun CardRowItem(modifier: Modifier, title: String, amount: String, imaget: Int) 
     }
 }
 
+fun changeLocales(context: Context, localeString: String){
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            context.getSystemService(LocaleManager::class.java)
+                .applicationLocales = LocaleList.forLanguageTags(localeString)
+        }
+    else {
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(localeString))
+    }
+
+}
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
