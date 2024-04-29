@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="next"> </string>
-    <string name="helloagain"> </string>
+    <string name="app_name">تطبيق الميزانية</string>
+    <string name="good_afternoon">مساء الخير</string>
+    <string name="user">مستخدم</string>
+    <string name="total_balance">الرصيد الإجمالي</string>
+    <string name="income">ريع</string>
+    <string name="expense">مصروف</string>
+    <string name="recent_transactions">التحويلات الاخيرة</string>
+    <string name="see_all">اظهار الكل</string>
+    <string name="add_expense">أضف النفقات</string>
+    <string name="name">اسم</string>
+    <string name="amount">كمية</string>
+    <string name="date">تاريخ</string>
+    <string name="category">فئة</string>
+    <string name="netflix">نيتفليكس</string>
+    <string name="paypal">باي بال</string>
+    <string name="coffee">قهوة</string>
+    <string name="salary">مرتب</string>
+    <string name="other">آخر</string>
+    <string name="type">نوع</string>
+    <string name="confirm">يتأكد</string>
+    <string name="cancel">يلغي</string>
 </resources>

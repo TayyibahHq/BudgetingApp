@@ -7,6 +7,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +26,7 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.rememberDatePickerState
@@ -40,6 +42,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -58,6 +61,7 @@ import kotlinx.coroutines.launch
 fun AddExpense(navController: NavController) {
     val viewModel =
         AddExpenseViewModelFactory(LocalContext.current).create(AddExpenseViewModel::class.java)
+    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     Surface(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -79,7 +83,7 @@ fun AddExpense(navController: NavController) {
                 }) {
                 Image(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
                 ExpenseTextView(
-                    text = "Add Expense",
+                    text = stringResource(R.string.add_expense),
                     fontSize = 20.sp,
                     color = Color.White,
                     fontWeight = FontWeight.Bold,
@@ -87,12 +91,34 @@ fun AddExpense(navController: NavController) {
                         .padding(16.dp)
                         .align(Alignment.Center)
                 )
+                Spacer(modifier = Modifier.size(130.dp))
                 Image(
                     painter = painterResource(id = R.drawable.dots_menu),
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.CenterEnd)
                 )
-            }
+                Row(modifier = Modifier.align(Alignment.TopEnd)){
+                    Button(onClick = {
+                        changeLocales(context, "en")
+                    }) {
+                        Text(
+                            text = "English",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+                    Button(onClick = {
+                        changeLocales(context, "ur")
+                    }) {
+                        Text(
+                            text = "Urdu",
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                    }
+            }}
             DataForm(modifier = Modifier.constrainAs(card) {
                 top.linkTo(nameRow.bottom)
                 start.linkTo(parent.start)
@@ -142,14 +168,14 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
             .verticalScroll(rememberScrollState())
     ) {
 
-        ExpenseTextView(text = "Name", fontSize = 14.sp)
+        ExpenseTextView(text = stringResource(R.string.name), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         OutlinedTextField(value = name.value, onValueChange = {
             name.value = it
         }, modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.size(8.dp))
 
-        ExpenseTextView(text = "Amount", fontSize = 14.sp)
+        ExpenseTextView(text = stringResource(R.string.amount), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         OutlinedTextField(value = amount.value, onValueChange = {
             amount.value = it
@@ -157,7 +183,7 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
         Spacer(modifier = Modifier.size(8.dp))
 
         //date
-        ExpenseTextView(text = "Date", fontSize = 14.sp)
+        ExpenseTextView(text = stringResource(R.string.date), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         OutlinedTextField(
             value = if (date.value == 0L) "" else Utils.formatDateToHumanReadableForm(date.value),
@@ -173,18 +199,18 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
         )
         Spacer(modifier = Modifier.size(8.dp))
         // dropdown
-        ExpenseTextView(text = "Category", fontSize = 14.sp)
+        ExpenseTextView(text = stringResource(R.string.category), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         ExpenseDropDown(
-            listOf("Netflix", "Paypal", "Starbucks", "Salary", "Upwork"),
+            listOf(stringResource(R.string.netflix), stringResource(R.string.paypal), stringResource(R.string.coffee), stringResource(R.string.salary), stringResource(R.string.other)),
             onItemSelected = {
                 category.value = it
             })
         Spacer(modifier = Modifier.size(8.dp))
-        ExpenseTextView(text = "Type", fontSize = 14.sp)
+        ExpenseTextView(text = stringResource(R.string.type), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         ExpenseDropDown(
-            listOf("Income", "Expense"),
+            listOf(stringResource(R.string.income), stringResource(R.string.expense)),
             onItemSelected = {
                 type.value = it
             })
@@ -202,7 +228,7 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
             )
             onAddExpenseClick(model)
         }, modifier = Modifier.fillMaxWidth()) {
-            ExpenseTextView(text = "Add Expense", fontSize = 14.sp, color = Color.White)
+            ExpenseTextView(text = stringResource(R.string.add_expense), fontSize = 14.sp, color = Color.White)
         }
     }
     if (dateDialogVisibility.value) {
@@ -224,11 +250,11 @@ fun ExpenseDatePickerDialog(
     val selectedDate = datePickerState.selectedDateMillis ?: 0L
     DatePickerDialog(onDismissRequest = { onDismiss() }, confirmButton = {
         TextButton(onClick = { onDateSelected(selectedDate) }) {
-            ExpenseTextView(text = "Confirm")
+            ExpenseTextView(text = stringResource(R.string.confirm))
         }
     }, dismissButton = {
         TextButton(onClick = { onDateSelected(selectedDate) }) {
-            ExpenseTextView(text = "Cancel")
+            ExpenseTextView(text = stringResource(R.string.cancel))
         }
     }) {
         DatePicker(state = datePickerState)

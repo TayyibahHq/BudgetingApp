@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,14 +72,15 @@ fun HomeScreen(navController: NavController) {
                     end.linkTo(parent.end)
                 }) {
                 Column(modifier = Modifier.align(Alignment.CenterStart)) {
-                    ExpenseTextView(text = "Good Afernoon", fontSize = 16.sp, color = Color.White)
+                    ExpenseTextView(text = stringResource(R.string.good_afternoon), fontSize = 16.sp, color = Color.White)
                     ExpenseTextView(
-                        text = "User",
+                        text = stringResource(R.string.user),
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
                     )
                 }
+                Spacer(modifier = Modifier.size(8.dp))
                 Row(modifier = Modifier.align(Alignment.TopEnd)){
                     Button(onClick = {
                         changeLocales(context, "en")
@@ -172,7 +174,7 @@ fun CardItem(
                 .weight(1f)
         ) {
             Column {
-                ExpenseTextView(text = "Total Balance", fontSize = 16.sp, color = Color.White)
+                ExpenseTextView(text = stringResource(R.string.total_balance), fontSize = 16.sp, color = Color.White)
                 ExpenseTextView(
                     text = balance, fontSize = 20.sp, color = Color.White,
                     fontWeight = FontWeight.Bold
@@ -193,7 +195,7 @@ fun CardItem(
             CardRowItem(
                 modifier = Modifier
                     .align(Alignment.CenterStart),
-                title = "Income",
+                title = stringResource(R.string.income),
                 amount = income,
                 imaget = R.drawable.ic_income
             )
@@ -201,7 +203,7 @@ fun CardItem(
             CardRowItem(
                 modifier = Modifier
                     .align(Alignment.CenterEnd),
-                title = "Expense",
+                title = stringResource(R.string.expense),
                 amount = expense,
                 imaget = R.drawable.ic_expense
             )
@@ -218,11 +220,11 @@ fun TransactionList(modifier: Modifier, list: List<ExpenseEntity>, viewModel: Ho
             Column {
                 Box(modifier = modifier.fillMaxWidth()) {
                     ExpenseTextView(
-                        text = "Recent Transactions",
+                        text = stringResource(R.string.recent_transactions),
                         fontSize = 20.sp,
                     )
                     ExpenseTextView(
-                        text = "See all",
+                        text = stringResource(R.string.see_all),
                         fontSize = 16.sp,
                         modifier = Modifier.align(Alignment.CenterEnd)
                     )
