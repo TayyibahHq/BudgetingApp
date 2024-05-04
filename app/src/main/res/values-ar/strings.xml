@@ -13,8 +13,8 @@
     <string name="amount">كمية</string>
     <string name="date">تاريخ</string>
     <string name="category">فئة</string>
-    <string name="netflix">نيتفليكس</string>
-    <string name="paypal">باي بال</string>
+    <string name="entertainment">ترفيه</string>
+    <string name="cashapp">التطبيق النقدي</string>
     <string name="coffee">قهوة</string>
     <string name="salary">مرتب</string>
     <string name="other">آخر</string>

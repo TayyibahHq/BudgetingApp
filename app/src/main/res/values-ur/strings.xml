@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">بجٹ ایپ</string>
-    <string name="good_afternoon">گڈ آفٹر نون</string>
-    <string name="user">یوزر</string>
-    <string name="total_balance">ٹوٹل بیلنس</string>
-    <string name="income">آمدنی</string>
-    <string name="expense">خرچہ</string>
-    <string name="recent_transactions">ریسنٹ ٹرانزکشنز</string>
-    <string name="see_all">سب ریکہے</string>
-    <string name="add_expense">اخراجات شامل کریں</string>
-    <string name="name">نام</string>
-    <string name="amount">رقم</string>
-    <string name="date">تاریخ</string>
-    <string name="category">زمره</string>
-    <string name="netflix">نیٹ فلکس</string>
-    <string name="paypal">پے پال</string>
-    <string name="coffee">کافی</string>
-    <string name="salary">تنخواہ</string>
-    <string name="other">دوسرے</string>
-    <string name="type">قسم</string>
-    <string name="confirm">تصدیق کریں</string>
-    <string name="cancel">منسوخ کریں</string>
+        <string name="app_name">بجٹ ایپ</string>
+        <string name="good_afternoon">گڈ آفٹر نون</string>
+        <string name="user">یوزر</string>
+        <string name="total_balance">ٹوٹل بیلنس</string>
+        <string name="income">آمدنی</string>
+        <string name="expense">خرچہ</string>
+        <string name="recent_transactions">ریسنٹ ٹرانزکشنز</string>
+        <string name="see_all">سب ریکہے</string>
+        <string name="add_expense">اخراجات aur آمدنی شامل کریں</string>
+        <string name="name">نام</string>
+        <string name="amount">رقم</string>
+        <string name="date">تاریخ</string>
+        <string name="category">زمره</string>
+        <string name="entertainment">تفریح</string>
+        <string name="cashapp">پے پال</string>
+        <string name="coffee">کافی</string>
+        <string name="salary">تنخواہ</string>
+        <string name="other">دوسرے</string>
+        <string name="type">قسم</string>
+        <string name="confirm">تصدیق کریں</string>
+        <string name="cancel">منسوخ کریں</string>
+        <string name="error">معذرت، ایک غلطی تھی</string>
 </resources>

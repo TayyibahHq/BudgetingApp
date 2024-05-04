@@ -2,6 +2,9 @@
 
 package com.cces.budgetapp
 
+import android.view.View.OnClickListener
+import android.widget.ImageButton
+import androidx.activity.OnBackPressedCallback
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -56,7 +60,6 @@ import com.cces.budgetapp.viewmodel.AddExpenseViewModelFactory
 import com.cces.budgetapp.widget.ExpenseTextView
 import kotlinx.coroutines.launch
 
-
 @Composable
 fun AddExpense(navController: NavController) {
     val viewModel =
@@ -92,33 +95,7 @@ fun AddExpense(navController: NavController) {
                         .align(Alignment.Center)
                 )
                 Spacer(modifier = Modifier.size(130.dp))
-                Image(
-                    painter = painterResource(id = R.drawable.dots_menu),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.CenterEnd)
-                )
-                Row(modifier = Modifier.align(Alignment.TopEnd)){
-                    Button(onClick = {
-                        changeLocales(context, "en")
-                    }) {
-                        Text(
-                            text = "English",
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    }
-                    Button(onClick = {
-                        changeLocales(context, "ur")
-                    }) {
-                        Text(
-                            text = "Urdu",
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    }
-            }}
+              }
             DataForm(modifier = Modifier.constrainAs(card) {
                 top.linkTo(nameRow.bottom)
                 start.linkTo(parent.start)
@@ -133,6 +110,8 @@ fun AddExpense(navController: NavController) {
         }
     }
 }
+
+
 
 @Composable
 fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Unit) {
@@ -167,7 +146,6 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-
         ExpenseTextView(text = stringResource(R.string.name), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         OutlinedTextField(value = name.value, onValueChange = {
@@ -186,7 +164,7 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
         ExpenseTextView(text = stringResource(R.string.date), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         OutlinedTextField(
-            value = if (date.value == 0L) "" else Utils.formatDateToHumanReadableForm(date.value),
+            value = if (date.longValue == 0L) "" else Utils.formatDateToHumanReadableForm(date.longValue),
             onValueChange = {},
             modifier = Modifier
                 .fillMaxWidth()
@@ -202,7 +180,7 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
         ExpenseTextView(text = stringResource(R.string.category), fontSize = 14.sp)
         Spacer(modifier = Modifier.size(4.dp))
         ExpenseDropDown(
-            listOf(stringResource(R.string.netflix), stringResource(R.string.paypal), stringResource(R.string.coffee), stringResource(R.string.salary), stringResource(R.string.other)),
+            listOf(stringResource(R.string.entertainment), stringResource(R.string.cashapp), stringResource(R.string.coffee), stringResource(R.string.salary), stringResource(R.string.other)),
             onItemSelected = {
                 category.value = it
             })
@@ -222,7 +200,7 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
                 null,
                 name.value,
                 amount.value.toDoubleOrNull() ?: 0.0,
-                Utils.formatDateToHumanReadableForm(date.value),
+                Utils.formatDateToHumanReadableForm(date.longValue),
                 category.value,
                 type.value
             )
@@ -233,7 +211,7 @@ fun DataForm(modifier: Modifier, onAddExpenseClick: (model: ExpenseEntity) -> Un
     }
     if (dateDialogVisibility.value) {
         ExpenseDatePickerDialog(onDateSelected = {
-            date.value = it
+            date.longValue = it
             dateDialogVisibility.value = false
         }, onDismiss = {
             dateDialogVisibility.value = false

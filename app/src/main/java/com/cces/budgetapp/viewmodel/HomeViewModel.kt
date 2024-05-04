@@ -1,6 +1,9 @@
 package com.cces.budgetapp.viewmodel
 
 import android.content.Context
+import androidx.compose.material3.Icon
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.cces.budgetapp.R
@@ -9,14 +12,17 @@ import com.cces.budgetapp.data.dao.ExpenseDao
 import com.cces.budgetapp.data.dao.ExpenseDatabase
 import com.cces.budgetapp.data.model.ExpenseEntity
 import java.lang.IllegalArgumentException
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ImageNotSupported
 
 class HomeViewModel(val dao: ExpenseDao) : ViewModel() {
     val expenses = dao.getAllExpense()
 
+    @Composable
     fun getBalance(list: List<ExpenseEntity>): String {
         var balance = 0.0
         for (expense in list) {
-            if (expense.type == "Income") {
+            if (expense.type == stringResource(R.string.income)) {
                 balance += expense.amount
             } else {
                 balance -= expense.amount
@@ -25,34 +31,38 @@ class HomeViewModel(val dao: ExpenseDao) : ViewModel() {
         return "$ ${Utils.formatToDecimalValue(balance)}"
     }
 
+    @Composable
     fun getTotalExpense(list: List<ExpenseEntity>): String {
         var total = 0.0
         for (expense in list) {
-            total += expense.amount
+            if (expense.type == stringResource(R.string.expense)) {
+                total += expense.amount
+            }}
+            return "$ ${Utils.formatToDecimalValue(total)}"
         }
 
-        return "$ ${Utils.formatToDecimalValue(total)}"
-    }
 
+    @Composable
     fun getTotalIncome(list: List<ExpenseEntity>): String {
         var totalIncome = 0.0
         for (expense in list) {
-            if (expense.type == "Income") {
+            if (expense.type == stringResource(R.string.income)) {
                 totalIncome += expense.amount
             }
         }
         return "$ ${Utils.formatToDecimalValue(totalIncome)}"
     }
 
-    fun getItemIcon(item: ExpenseEntity): Int {
+    @Composable
+    fun getItemIcon(item: ExpenseEntity): Any {
         return when (item.category) {
-            "Paypal" -> {
-                R.drawable.ic_paypal
-            }
-            "Netflix" -> {
+            stringResource(R.string.entertainment) -> {
                 R.drawable.ic_netflix
             }
-            "Starbucks" -> {
+            stringResource(R.string.cashapp) -> {
+                R.drawable.ic_paypal
+            }
+            stringResource(R.string.coffee) -> {
                 R.drawable.ic_starbucks
             }
             else -> {
@@ -60,7 +70,7 @@ class HomeViewModel(val dao: ExpenseDao) : ViewModel() {
             }
         }
     }
-}
+//}
 
 class HomeViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -70,4 +80,4 @@ class HomeViewModelFactory(private val context: Context) : ViewModelProvider.Fac
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-}
+}}

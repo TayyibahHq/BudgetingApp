@@ -4,7 +4,6 @@ import android.app.LocaleManager
 import android.content.Context
 import android.os.Build
 import android.os.LocaleList
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -46,13 +45,18 @@ import androidx.navigation.compose.rememberNavController
 import com.cces.budgetapp.data.model.ExpenseEntity
 import com.cces.budgetapp.ui.theme.Zinc
 import com.cces.budgetapp.viewmodel.HomeViewModel
-import com.cces.budgetapp.viewmodel.HomeViewModelFactory
 import com.cces.budgetapp.widget.ExpenseTextView
 
 
 @Composable
 fun HomeScreen(navController: NavController) {
-    val viewModel = HomeViewModelFactory(LocalContext.current).create(HomeViewModel::class.java)
+ /*   val model = ImageRequest
+        .Builder(LocalContext.current)
+        .data("https://drive.google.com/file/d/11cnAUaLJ3a6ggVbi-NLpmVU7raIVALHO/view?usp=sharing")
+        .size(Size.ORIGINAL)
+        .build()
+    val imageState = rememberAsyncImagePainter(model = model).state */
+    val viewModel = HomeViewModel.HomeViewModelFactory(LocalContext.current).create(HomeViewModel::class.java)
     val context = LocalContext.current
     Surface(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -63,6 +67,29 @@ fun HomeScreen(navController: NavController) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 })
+            /* Box(modifier = Modifier.constrainAs(topBar)
+                 {
+                     top.linkTo(parent.top)
+                     start.linkTo(parent.start)
+                     end.linkTo(parent.end)
+                 }) {
+                 if (imageState is AsyncImagePainter.State.Success) {
+                     Image(painter = imageState.painter, contentDescription = null)
+                 }
+                 if (imageState is AsyncImagePainter.State.Loading) {
+                     CircularProgressIndicator(
+                         modifier = Modifier
+                             .size(100.dp),
+                         color = (MaterialTheme.colorScheme.primary)
+                     )
+                 }
+                 if (imageState is AsyncImagePainter.State.Error) {
+                     Icon(
+                         imageVector = Icons.Rounded.ImageNotSupported,
+                         contentDescription = null
+                     )
+                 }
+            }*/
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 64.dp, start = 16.dp, end = 16.dp)
@@ -81,33 +108,6 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
                 Spacer(modifier = Modifier.size(8.dp))
-                Row(modifier = Modifier.align(Alignment.TopEnd)){
-                    Button(onClick = {
-                        changeLocales(context, "en")
-                    }) {
-                        Text(
-                            text = "English",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    }
-                    Button(onClick = {
-                        changeLocales(context, "ur")
-                    }) {
-                        Text(
-                            text = "Urdu",
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.White
-                        )
-                    }
-                }
-                Image(
-                    painter = painterResource(id = R.drawable.ic_notification),
-                    contentDescription = null,
-                    modifier = Modifier.align(Alignment.BottomEnd)
-                )
             }
 
             val state = viewModel.expenses.collectAsState(initial = emptyList())
@@ -180,11 +180,11 @@ fun CardItem(
                     fontWeight = FontWeight.Bold
                 )
             }
-            Image(
+           /* Image(
                 painter = painterResource(id = R.drawable.dots_menu),
                 contentDescription = null,
                 modifier = Modifier.align(Alignment.CenterEnd)
-            )
+            ) */
         }
 
         Box(
@@ -249,7 +249,7 @@ fun TransactionList(modifier: Modifier, list: List<ExpenseEntity>, viewModel: Ho
 fun TransactionItem(
     title: String,
     amount: String,
-    icon: Int,
+    icon: Any,
     date: String,
     color: Color
 ) {
@@ -261,7 +261,7 @@ fun TransactionItem(
     ) {
         Row() {
             Image(
-                painter = painterResource(id = icon),
+                painter = painterResource(id = icon as Int),
                 contentDescription = null,
                 modifier = Modifier.size(50.dp)
             )
