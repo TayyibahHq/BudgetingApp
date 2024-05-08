@@ -238,7 +238,7 @@ fun TransactionList(modifier: Modifier, list: List<ExpenseEntity>, viewModel: Ho
                 amount = item.amount.toString(),
                 icon = icon,
                 date = item.date,
-                color = if (item.type == "Income") Color.Green else Color.Red
+                color = if (item.type == stringResource(R.string.income)) Color.Green else Color.Red
             )
         }
 

@@ -36,7 +36,7 @@ class HomeViewModel(val dao: ExpenseDao) : ViewModel() {
         var total = 0.0
         for (expense in list) {
             if (expense.type == stringResource(R.string.expense)) {
-                total += expense.amount
+                total -= expense.amount
             }}
             return "$ ${Utils.formatToDecimalValue(total)}"
         }

@@ -25,10 +25,10 @@ abstract class ExpenseDatabase : RoomDatabase() {
             ).addCallback(object : Callback() {
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                   InitBasicData(context)
+                   //InitBasicData(context)
                 }
 
-                fun InitBasicData(context: Context) {
+               /* fun InitBasicData(context: Context) {
                     CoroutineScope(Dispatchers.IO).launch {
                         val dao = getInstance(context).expenseDao()
                         dao.insertExpense(
@@ -72,7 +72,7 @@ abstract class ExpenseDatabase : RoomDatabase() {
                             )
                         )
                     }
-                }
+                }*/
             })
                 .build()
         }
